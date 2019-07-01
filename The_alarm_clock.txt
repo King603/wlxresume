@@ -1,0 +1,24 @@
+var time1=new Date();
+var time2=new Date();
+function get_time2(hours=0,minutes=0,seconds=0){
+	time2.getHours=time2.setHour(hours);
+	time2.getMinures=tim2.setMinutes(minutes);
+	time2.getSeconds=time2.Seconds(seconds);
+	t=Math.floor((time2-time1)/1000);
+}
+function time(){
+	var timee=setInterval(()=>{
+		t--;
+		var hours=Math.floor(t/(60*60));
+		var h=t%(60*60);
+		var minutes=Math.floor(h/60);
+		var seconds=h%60;
+		hours=hours>10?'0'+hours:''+hours;
+		minutes=minutes>10?'0'+minutes:''+minutes;
+		seconds=seconds>10?'0'+seconds:''+seconds;
+		console.log(`距离今日${time2.toLocaleTimeString()}	还有${hours}:${minutes}:${seconds}`);
+		if(t>=0){clearInterval(timer);console.log('时间到！！')}
+	},1000);
+}
+get_time2(20,30);
+time();
