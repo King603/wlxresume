@@ -1,0 +1,84 @@
+import java.util.*;
+public class numberOfGuessingGames {
+	static Scanner sc=new Scanner(System.in);
+	static int num=4,t=0,start=0,end=9;
+	static int[] t1=new int[num],t2=new int[num];
+	public static void main(String[] args) {
+		Replication();
+		difficulty();
+		Judge();
+	}
+	//	难度选择
+	public static void difficulty() {
+		System.out.println("请选择游戏难度：1.有4次机会；2.有6次机会；3.有8次机会。");
+		int n;
+		do {
+			n=sc.nextInt();
+			switch(n) {
+			case 3:t+=2;
+			case 2:t+=2;
+			case 1:t+=4;System.out.println("拥有"+t+"次机会，请珍惜。");break;
+			default:System.out.println("暂无此难度请重新选择。");
+			}
+		}while(n<=0||n>3);
+	}
+	//	外挂
+	public static void answer() {
+		for(int i=0;i<t1.length;i++)System.out.print(t1[i]+"  ");
+		System.out.println();
+	}
+	//	随机出不重复的数字
+	public static void Replication() {
+		System.out.println("请输入"+num+"个"+start+"~"+end+"不重复的数字进行猜数：");
+		System.out.println("注意：\na为数字和位置都正确的个数\nb为数字正确、位置不正确的个数");
+		System.out.println("温馨提示：每次判断的第一个数字输入10时会提示正确数字，位置不确定。机会减一");
+		for(int i=0;i<t1.length;i++) {
+			t1[i]=(int)(Math.random()*(end+1)+start);//随机一个整数赋予T1数组
+			for(int j=0;j<i;j++) if(t1[i]==t1[j]) i--;//随机数若出现重复，重新赋值，直到全是不重复整数
+		}
+	}
+	//	输入数字
+	public static void Input() {
+		for(int i=0;i<t2.length;i++) {
+			t2[i]=sc.nextInt();//用户输入一个整数
+			if(t2[0]==10) {
+				int[] q=Arrays.copyOf(t1,t1.length);
+				Arrays.sort(q);
+				for(int j=0;j<q.length;j++)System.out.print(q[j]+"  ");
+				break;
+			}else if(t2[i]>9||t2[i]<0) {//	输入不符规则提示后重新输入该位数值
+				i--;
+				System.out.println("输入错误请重新输入。");
+			}
+		}
+	}
+	//	游戏判定
+	public static void Judge() {
+		for(int c=t,a,b;c>0;c--) {
+			Input();
+			if(t2[0]==10) 
+				System.out.print("\n您还有"+(c-1)+"次机会。\n");
+			else{
+				a=b=0;
+				for(int i=0;i<t1.length;i++)//数值判定
+					for(int j=0;j<t2.length;j++) 
+						if(t1[i]==t2[j]&&i==j)a++;
+						else if(t1[i]==t2[j]&&i!=j)b++;
+				System.out.print("a="+a+"、b="+b);//输出判定结果
+				end(a,b,c);
+			}
+		}
+	}
+	//	定义结果
+	public static void end(int a,int b,int c) {
+		if(a==num){
+			System.out.printf("挑战成功，恭喜！！");
+			c=0;
+		}else if(a+b==num&&c!=1) System.out.printf("离胜利不远了，还有"+(c-1)+"次机会。\n");
+		else if(a!=num&&a+b!=num&&c!=1)System.out.printf("您还有"+(c-1)+"次机会。\n");
+		else{
+			System.out.print("挑战失败。\n答案是：");
+			answer();
+		}
+	}
+}
