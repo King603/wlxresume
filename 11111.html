@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>测试</title>
+    </head>
+    <body>
+        <div id="d1">
+            <input type="time" id="time" placeholder="请输入目标时间">
+            <button onclick="show()"></button>
+        </div>
+        <script>
+        var time1=new Date();
+        var t;
+            function show(){
+                get_time2(time.hours,time.minutes,time.seconds);
+                Time();
+            }
+            function get_time2(hours=0,minutes=0,seconds=0){    
+                t=Math.floor((time-time1)/1000);
+            }
+            function Time(t){
+                var timer=setInterval(()=>{
+                    t--;
+                    var $hours=Math.floor(t/(60*60));
+                    var h=t%(60*60);
+                    var $minutes=Math.floor(h/60);
+                    var $seconds=h%60;
+                    $hours=$hours<10?'0'+$hours:''+$hours;
+                    $minutes=$minutes<10?'0'+$minutes:''+$minutes;
+                    $seconds=$seconds<10?'0'+$seconds:''+$seconds;
+                    document.write(` 距离今日${time.hours}:${time.minutes}:${time.seconds}	还有${$hours}:${$minutes}:${$seconds}`);
+                    if(t<=0){clearInterval(timer);document.write('时间到！！')}
+                },1000);
+            }
+        </script>
+    </body>
+</html>
